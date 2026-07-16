@@ -22,16 +22,19 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    /* whole page on one type system: Recursive. Prose reads in Linear (proportional sans). */
+    /* whole page on one type system: Recursive. Prose reads in a lightly Casual Linear;
+       the Mono "chrome" rules below reset CASL to 0 to stay crisp. */
     font-family: 'Recursive', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+    font-variation-settings: 'MONO' 0, 'CASL' 0.32, 'wght' 400, 'slnt' 0, 'CRSV' 0;
     background: var(--paper);
     color: var(--ink);
     line-height: 1.62;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 700px; margin: 0 auto; padding: 0 24px; }
-  @media (max-width: 400px) { .wrap { padding: 0 20px; } }
+  /* .wrap controls horizontal gutter only (longhands) so it never clobbers the
+     vertical padding set on .hero / section / footer via the cascade. */
+  .wrap { max-width: 700px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  @media (max-width: 400px) { .wrap { padding-left: 20px; padding-right: 20px; } }
 
   /* ---- Hero: one variable font (Recursive) does everything ---- */
   /* use padding longhands so .wrap's horizontal padding is preserved (no shorthand reset) */
@@ -89,7 +92,7 @@
 
   .rule { border: 0; border-top: 1px solid var(--line); }
 
-  section { padding: 56px 0; }
+  section { padding-top: 76px; padding-bottom: 76px; }
   h2 {
     /* structural labels take the Mono voice — the engineered/system end of Recursive */
     font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 560, 'slnt' 0, 'CRSV' 0;
@@ -115,7 +118,7 @@
   }
 
   footer {
-    padding: 40px 0 56px;
+    padding-top: 8px; padding-bottom: 64px;
     font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 420, 'slnt' 0, 'CRSV' 0;
     font-size: 0.8rem;
     letter-spacing: 0.01em;

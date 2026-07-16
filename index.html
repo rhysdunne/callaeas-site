@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Callaeas | Product &amp; technology consultancy</title>
-<meta name="description" content="Callaeas is a product and technology consultancy.">
+<meta name="description" content="Callaeas is a product and technology consultancy. Digital spaghetti, untangled.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1d2530;
@@ -15,6 +15,10 @@
     --paper: #f6f5f1;
     --line: #dcdad2;
     --accent: #2547d0;
+    /* tagline colour arc: chaos (warm) cooling into the house indigo (calm) */
+    --warm: #cf3b52;
+    --warm-mid: #8e3a86;
+    --cool: #2547d0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -24,66 +28,58 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 620px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 400px) { .wrap { padding: 0 20px; } }
 
-  header { padding: 48px 0 0; }
-  .mark {
-    font-size: 0.95rem; font-weight: 600;
-    letter-spacing: 0.18em; text-transform: uppercase;
-  }
+  /* ---- Hero: one variable font (Recursive) does everything ---- */
+  /* use padding longhands so .wrap's horizontal padding is preserved (no shorthand reset) */
+  .hero { padding-top: 96px; padding-bottom: 84px; }
 
-  .hero { padding: 104px 0 88px; }
-  .hero-title {
-    font-weight: 600;
-    line-height: 1.04;
+  /* Brand = Recursive at its fully-resolved coordinate: linear, upright, heavy */
+  .brand {
+    font-family: 'Recursive', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 860, 'slnt' 0, 'CRSV' 0;
+    font-size: clamp(3.2rem, 11vw, 6.6rem);
+    line-height: 0.98;
     letter-spacing: -0.02em;
-  }
-  .spaghetti {
-    display: block;
-    font-family: 'Dancing Script', cursive;
-    font-weight: 700;
-    font-size: clamp(2.1rem, 10.5vw, 5.4rem);
-    line-height: 0.95;
-    letter-spacing: 0;
     color: var(--ink);
   }
-  .spaghetti .comma { color: var(--ink-soft); }
-  .untangled {
-    display: block;
-    margin-top: 0.08em;
-    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-weight: 400;
-    font-size: clamp(1.9rem, 6.4vw, 3.1rem);
-    letter-spacing: 0.05em;
-    color: var(--ink);
+
+  /* Tagline = the same font travelling toward that coordinate, one line, morphing per letter */
+  .tagline {
+    margin-top: 0.16em;
+    font-family: 'Recursive', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    font-size: clamp(1.2rem, 6vw, 2.65rem);
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    color: var(--cool); /* solid-indigo fallback where background-clip:text is unsupported */
   }
-  .motif {
-    display: block;
-    width: min(100%, 22ch);
-    height: 20px;
-    margin-top: 14px;
-    overflow: visible;
-  }
-  .motif path {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.55;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .motif path {
-      stroke-dasharray: 460;
-      stroke-dashoffset: 460;
-      animation: untangle 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s forwards;
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .tagline {
+      background: linear-gradient(90deg, var(--warm) 0%, var(--warm) 40%, var(--warm-mid) 66%, var(--cool) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
     }
   }
-  @keyframes untangle {
-    to { stroke-dashoffset: 0; }
+  /* the 'untangled' letters ramp onto the mono grid; pull tracking to absorb the widening */
+  .tagline .m { letter-spacing: -0.012em; }
+
+  /* on-load: the tagline settles into place as one unit (motion-gated).
+     NB: animate the whole line, not per-letter — per-child opacity breaks the
+     parent's background-clip:text gradient and renders the glyphs invisible. */
+  @media (prefers-reduced-motion: no-preference) {
+    .tagline { animation: settle 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
   }
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(0.16em); }
+    to   { opacity: 1; transform: none; }
+  }
+
   .hero p {
-    margin-top: 26px;
+    margin-top: 30px;
     font-size: 1.05rem;
     color: var(--ink-soft);
     max-width: 46ch;
@@ -127,25 +123,19 @@
       --paper: #171c24;
       --line: #2c3440;
       --accent: #7d95f5;
+      --warm: #ff6f8a;
+      --warm-mid: #b071d6;
+      --cool: #7d95f5;
     }
   }
 </style>
 </head>
 <body>
 
-<header class="wrap">
-  <div class="mark">Callaeas</div>
-</header>
-
 <main>
   <div class="hero wrap">
-    <h1 class="hero-title">
-      <span class="spaghetti">digital spaghetti<span class="comma">,</span></span>
-      <span class="untangled">untangled</span>
-      <svg class="motif" viewBox="0 0 300 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        <path d="M2 11 C 14 -3, 26 25, 40 11 S 66 -3, 80 11 S 106 24, 120 12 C 132 5, 146 11, 162 11 L 298 11" />
-      </svg>
-    </h1>
+    <div class="brand">Callaeas</div>
+    <div class="tagline" aria-label="digital spaghetti untangled"><span style="--i:0;font-variation-settings:'MONO' 0,'CASL' 1.0,'wght' 760,'slnt' -14.0,'CRSV' 1">d</span><span style="--i:1;font-variation-settings:'MONO' 0,'CASL' 0.96,'wght' 745,'slnt' -13.4,'CRSV' 1">i</span><span style="--i:2;font-variation-settings:'MONO' 0,'CASL' 0.92,'wght' 730,'slnt' -12.8,'CRSV' 1">g</span><span style="--i:3;font-variation-settings:'MONO' 0,'CASL' 0.88,'wght' 715,'slnt' -12.2,'CRSV' 1">i</span><span style="--i:4;font-variation-settings:'MONO' 0,'CASL' 0.83,'wght' 700,'slnt' -11.7,'CRSV' 1">t</span><span style="--i:5;font-variation-settings:'MONO' 0,'CASL' 0.79,'wght' 685,'slnt' -11.1,'CRSV' 1">a</span><span style="--i:6;font-variation-settings:'MONO' 0,'CASL' 0.75,'wght' 670,'slnt' -10.5,'CRSV' 1">l</span> <span style="--i:7;font-variation-settings:'MONO' 0,'CASL' 0.71,'wght' 655,'slnt' -9.9,'CRSV' 1">s</span><span style="--i:8;font-variation-settings:'MONO' 0,'CASL' 0.67,'wght' 640,'slnt' -9.3,'CRSV' 1">p</span><span style="--i:9;font-variation-settings:'MONO' 0,'CASL' 0.62,'wght' 625,'slnt' -8.8,'CRSV' 1">a</span><span style="--i:10;font-variation-settings:'MONO' 0,'CASL' 0.58,'wght' 610,'slnt' -8.2,'CRSV' 1">g</span><span style="--i:11;font-variation-settings:'MONO' 0,'CASL' 0.54,'wght' 595,'slnt' -7.6,'CRSV' 1">h</span><span style="--i:12;font-variation-settings:'MONO' 0,'CASL' 0.5,'wght' 580,'slnt' -7.0,'CRSV' 1">e</span><span style="--i:13;font-variation-settings:'MONO' 0,'CASL' 0.46,'wght' 565,'slnt' -6.4,'CRSV' 1">t</span><span style="--i:14;font-variation-settings:'MONO' 0,'CASL' 0.42,'wght' 550,'slnt' -5.8,'CRSV' 1">t</span><span style="--i:15;font-variation-settings:'MONO' 0,'CASL' 0.38,'wght' 535,'slnt' -5.2,'CRSV' 1">i</span> <span class="m" style="--i:16;font-variation-settings:'MONO' 0.0,'CASL' 0.33,'wght' 520,'slnt' -4.7,'CRSV' 0">u</span><span class="m" style="--i:17;font-variation-settings:'MONO' 0.12,'CASL' 0.29,'wght' 505,'slnt' -4.1,'CRSV' 0">n</span><span class="m" style="--i:18;font-variation-settings:'MONO' 0.25,'CASL' 0.25,'wght' 490,'slnt' -3.5,'CRSV' 0">t</span><span class="m" style="--i:19;font-variation-settings:'MONO' 0.38,'CASL' 0.21,'wght' 475,'slnt' -2.9,'CRSV' 0">a</span><span class="m" style="--i:20;font-variation-settings:'MONO' 0.5,'CASL' 0.17,'wght' 460,'slnt' -2.3,'CRSV' 0">n</span><span class="m" style="--i:21;font-variation-settings:'MONO' 0.62,'CASL' 0.12,'wght' 445,'slnt' -1.8,'CRSV' 0">g</span><span class="m" style="--i:22;font-variation-settings:'MONO' 0.75,'CASL' 0.08,'wght' 430,'slnt' -1.2,'CRSV' 0">l</span><span class="m" style="--i:23;font-variation-settings:'MONO' 0.88,'CASL' 0.04,'wght' 415,'slnt' -0.6,'CRSV' 0">e</span><span class="m" style="--i:24;font-variation-settings:'MONO' 1.0,'CASL' 0.0,'wght' 400,'slnt' 0.0,'CRSV' 0">d</span></div>
     <p>We come into digital businesses with a lot going on — product, tech, and the commercial knots in between — and make sense of the mess.</p>
   </div>
 

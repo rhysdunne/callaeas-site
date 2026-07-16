@@ -7,7 +7,7 @@
 <meta name="description" content="Callaeas is a product and technology consultancy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1d2530;
@@ -33,18 +33,60 @@
   }
 
   .hero { padding: 104px 0 88px; }
-  .hero h1 {
+  .hero-title {
     font-weight: 600;
-    font-size: clamp(2rem, 6vw, 2.9rem);
-    line-height: 1.12;
+    line-height: 1.04;
     letter-spacing: -0.02em;
-    max-width: 18ch;
+  }
+  .spaghetti {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 10.5vw, 5.4rem);
+    line-height: 0.95;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .spaghetti .comma { color: var(--ink-soft); }
+  .untangled {
+    display: block;
+    margin-top: 0.08em;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 6.4vw, 3.1rem);
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .motif {
+    display: block;
+    width: min(100%, 22ch);
+    height: 20px;
+    margin-top: 14px;
+    overflow: visible;
+  }
+  .motif path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.55;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .motif path {
+      stroke-dasharray: 460;
+      stroke-dashoffset: 460;
+      animation: untangle 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s forwards;
+    }
+  }
+  @keyframes untangle {
+    to { stroke-dashoffset: 0; }
   }
   .hero p {
-    margin-top: 22px;
+    margin-top: 26px;
     font-size: 1.05rem;
     color: var(--ink-soft);
-    max-width: 44ch;
+    max-width: 46ch;
   }
 
   .rule { border: 0; border-top: 1px solid var(--line); }
@@ -97,8 +139,14 @@
 
 <main>
   <div class="hero wrap">
-    <h1>Product &amp; technology consultancy.</h1>
-    <p>For digital businesses with a lot going on.</p>
+    <h1 class="hero-title">
+      <span class="spaghetti">digital spaghetti<span class="comma">,</span></span>
+      <span class="untangled">untangled</span>
+      <svg class="motif" viewBox="0 0 300 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M2 11 C 14 -3, 26 25, 40 11 S 66 -3, 80 11 S 106 24, 120 12 C 132 5, 146 11, 162 11 L 298 11" />
+      </svg>
+    </h1>
+    <p>We come into digital businesses with a lot going on — product, tech, and the commercial knots in between — and make sense of the mess.</p>
   </div>
 
   <div class="wrap"><hr class="rule"></div>
